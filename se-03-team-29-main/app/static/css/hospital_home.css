@@ -1,0 +1,215 @@
+.content {
+    width: 100%;
+    height: 93%;
+    display: flex;
+}
+
+
+.navbar {
+    width: 100%;
+    height: 7%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+
+}
+
+
+.navbar h1 {
+    margin: 0;
+    font-weight: initial;
+    font-size: 1.5rem;
+}
+
+.sidebar {
+    width: 10%;
+    background-color: #006DBA;
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    color: #F2F6FD;
+    font-size: 18px;
+}
+
+.sidebar_top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 30px;
+    padding-top: 70px;
+}
+
+.sidebar_bottom {
+    padding-bottom: 30px;
+}
+
+.sidebtn {
+    color: #CDDFFF;
+    background-color: #006DBA;
+    border: none;
+    transition: 200ms;
+}
+
+.sidebtn:hover {
+    cursor: pointer;
+    color: white;
+    transition: 200ms;
+}
+
+.activebtn {
+    color: white;
+}
+
+.logout:hover {
+    color: #D2160D;
+}
+
+.maincontent {
+    width: 90%;
+    background-color: #F2F6FD;
+}
+
+.interface {
+    background-color: white;
+    border-radius: 4px;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0px 2px 6px grey;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+}
+
+
+.interface_container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.type_selector {
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+#searchbtn {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
+
+
+
+.filterbtn {
+    width: 20%;
+    height: 100%;
+    border: solid 1px black;
+}
+
+.filterbtn {
+    color: #006DBA;
+    border: none;
+    background-color: white;
+    transition: 200ms;
+}
+
+.filterbtn:hover {
+    cursor: pointer;
+    color: #0583DC;
+    transition: 200ms;
+    border-bottom: solid 1px #0583DC;
+}
+
+.filterbtn_active {
+    border-bottom: solid 3px #006DBA;
+    transition: 100ms;
+}
+
+.interfacebtn {
+    background-color: #006DBA;
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+.interfacebtn:hover {
+    background-color: #0583DC;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.table {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
+
+
+.visitor_table {
+    width: 100%;
+    height: 100%;
+}
+
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.visitor_row {
+    border-bottom: solid 1px #E0E0E0;
+    max-height: 40px !important;
+}
+
+tr {
+    height: 50px;
+}
+
+
+.visitor_table {
+    width: 100%;
+    max-height: 100%;
+}
+
+.updatebtn {
+    cursor: pointer;
+}
+
+
+.visitor_row:hover {
+    background-color: #E0E0E0;
+}
+
+.visitor_content {
+    height: 70%;
+    border-radius: 10px;
+    background-color: #F2F6FD;
+    overflow: hidden;
+}
+
+.visitor_inner_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}

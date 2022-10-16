@@ -1,0 +1,200 @@
+{% extends 'layout.html' %}
+
+
+{% block head %}
+<title>Hospital Page</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/hospital_home.css')}}" />
+<script src="https://kit.fontawesome.com/1ccab8aa0c.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="content">
+    <div class="sidebar">
+        <div class="sidebar_top">
+            <button class="sidebtn activebtn">Visitor Lookup</button>
+        </div>
+        <div class="sidebar_bottom">
+            <button class="sidebtn logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="interface_container">
+            <div class="search_tools">
+                <form class="visitor_search">
+                    <input type="text" placeholder="Visitor name" name="visitor_name" />
+                    <span>OR</span>
+                    <input type="text" placeholder="Device Id" name="device_id" />
+                    <button type="button" onclick="search()" id="searchbtn" class="interfacebtn">Search</button>
+                </form>
+            </div>
+            <div class="interface">
+                <div class="type_selector">
+                    <button class="filterbtn filterbtn_active" id="showallbtn" onclick="showAll()">All</button>
+                    <button class="filterbtn" id="showinfectedbtn" onclick="showInfected()">Infected</button>
+                </div>
+                <div class="table">
+                    <table class="visitor_table">
+                        <thead>
+                            <tr id="header">
+                                <th>
+                                    Visitor Name
+                                </th>
+                                <th>
+                                    Device Id
+                                </th>
+                                <th>
+                                    Infection Status
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="place_result">
+
+                </div>
+            </div>
+        </div>
+        <div class="w3-container">
+            <div id="visitorModal" class="w3-modal">
+                <div class="w3-modal-content  visitor_content">
+                    <div class="w3-container visitor_inner_container">
+                        <span onclick="document.getElementById('visitorModal').style.display='none'"
+                            class="w3-button w3-display-topright">&times;</span>
+                        <p>Visitor Name: <span id="visitor_name"></span></p>
+                        <p>Device_id: <span id="visitor_id"></span></p>
+                        <p>Infected: <input type="checkbox" id="infected_checkbox" /></p>
+                        <button id="setInfection" type="button">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<Script>
+    let show = "All";
+    let visitor_data = []
+
+
+    function showAll() {
+        show = "All"
+        $("#showallbtn").addClass("filterbtn_active");
+        $("#showinfectedbtn").removeClass("filterbtn_active");
+        setVisitors()
+    }
+
+    function showInfected() {
+        show = "Infected"
+        $("#showallbtn").removeClass("filterbtn_active");
+        $("#showinfectedbtn").addClass("filterbtn_active");
+        setVisitors()
+    }
+
+    function fetchVisitors() {
+        $.get('/hospital_visitor_lookup', (response) => {
+            visitor_data = JSON.parse(response)
+            if (visitor_data.length == 0)
+                noVisitors()
+            else
+                setVisitors()
+        })
+    }
+
+    fetchVisitors();
+
+
+    function search() {
+        let name = document.querySelector('input[name="visitor_name"]').value;
+        let device_id = document.querySelector('input[name="device_id"]').value;
+        $.post(
+            "/hospital_visitor_lookup", {
+                visitor_name: name,
+                device_id: device_id,
+            },
+            (response) => {
+                visitor_data = JSON.parse(response)
+                setVisitors()
+            }
+        );
+    }
+
+    function setVisitors() {
+        data = ''
+
+        if (show === "All") {
+            for (let i = 0; i < visitor_data.length; i++) {
+                if (visitor_data[i]['infected'] == 1)
+                    data +=
+                    `<tr  class="infected_person visitor_row" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']}><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td><td><i class="fas fa-pen updatebtn" onclick="popup(event)" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']} data-infection=${visitor_data[i]['infected']}></i></td></tr>`
+                else
+                    data +=
+                    `<tr class="visitor_row" ><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td><td><i class="fas fa-pen updatebtn" onclick="popup(event)" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']} data-infection=${visitor_data[i]['infected']}></i></td></tr>`
+            }
+
+        } else {
+            for (let i = 0; i < visitor_data.length; i++) {
+                if (visitor_data[i]['infected'] == 1)
+                    data +=
+                    `<tr  class="infected_person visitor_row" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']}><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td><td><i class="fas fa-pen updatebtn" onclick="popup(event)" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']} data-infection=${visitor_data[i]['infected']}></i></td></tr>`
+            }
+        }
+        $("#tableBody").html(data)
+    }
+
+
+
+    function popup(event) {
+
+        let visitor_name = event.currentTarget.dataset.visitor_name;
+        let device_id = event.currentTarget.dataset.device_id;
+        let infection_status = event.currentTarget.dataset.infection;
+
+        console.log(event.currentTarget.dataset)
+
+        $("#visitor_name").html(visitor_name);
+        $("#visitor_id").html(device_id)
+        $("#setInfection").prop("disabled", true);
+
+        if (infection_status == 1) $("#infected_checkbox").prop("checked", true);
+        else $("#infected_checkbox").prop("checked", false);
+
+        $("#infected_checkbox").change(function () {
+            if (this.checked == infection_status) $("#setInfection").prop("disabled", true);
+            else $("#setInfection").prop("disabled", false);
+        });
+
+        $("#setInfection").click(() => {
+            updateInfection(device_id, infection_status == 0 ? 1 : 0);
+        });
+
+        document.getElementById("visitorModal").style.display = "block";
+    }
+
+    function updateInfection(device_id, infection) {
+        $.post(
+            "/hospital_visitor_update_infection", {
+                device_id: device_id,
+                infection: infection,
+            },
+            (res) => {
+                if (res == "Success") {
+                    document.getElementById("visitorModal").style.display = "none";
+                    search();
+                }
+            }
+        );
+    }
+
+    function logout() {
+        window.location.href = '/hospital_logout'
+    }
+</Script>
+{% endblock %}

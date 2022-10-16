@@ -1,0 +1,67 @@
+{% extends 'layout.html'%}
+
+{% block head %}
+<title>CoronaArchive</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/landingpage.css')}}" />
+<meta id="login_data" data-visitor="{{visitor}}" data-place="{{place}}" data-agent="{{agent}}"
+    data-hospital="{{hospital}}" />
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+    <div class="signup_forms">
+        <div>
+            <h1>Welcome to <span class="logored">CoronaArchive</span></h1>
+            <p><span class="greytext">Please choose account type below</span></p>
+        </div>
+        <div class="forms selector">
+            <button onclick="agent_login()" class="btnblue" id="agentbtn">AGENT</button>
+            <button onclick="hospital_login()" class="btnblue" id="hospitalbtn">HOSPITAL</button>
+            <button onclick="visitor_register()" class="btngrey" id="visitorbtn">VISITOR</button>
+            <button onclick="place_register()" class="btngrey" id="placebtn">PLACE OWNER</button>
+        </div>
+        <div class="forms">
+            <form id="agent_hospital_form">
+                <input type="text" placeholder="Username" name="username" id="agent_hospital_username" required />
+                <input type="password" placeholder="Password" name="password" id="agent_hospital_password" required />
+                <p class="agent_hospital_error" style="display: none;"></p>
+                <button class="formbtn btnblue" type="button" onclick="agent_login_ajax()"
+                    id="agent_hospital_btn">Login</button>
+            </form>
+            <form id="visitor_form" style="display: none;" action="/visitor_signup" method="POST">
+                <input id="visitor_username" type="text" placeholder="Name" name="username" minlength="3"
+                    maxlength="255" required />
+                <input id="visitor_address" type="text" placeholder="Address" name="address" minlength="3"
+                    maxlength="255" required />
+                <input id="visitor_email" type="email" placeholder="Email" name="email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                <p class="greytext">OR</p>
+                <input id="visitor_phone" type="tel" placeholder="Phone" name="phone" pattern="^(0|[1-9][0-9]*)$"
+                    required />
+                <button type="submit" class="formbtn btnblue">Register</button>
+            </form>
+            <form id="place_form" style="display: none;" action="/place_signup" method="POST">
+                <input type="text" placeholder="Place Name" name="place_name" required />
+                <input type="text" placeholder="Address" name="address" required />
+                <button class="formbtn btnblue">Register</button>
+            </form>
+            <div id="signed_in" style="display: none;">
+                <p>You are already signed in as <span id="account_type"></span></p>
+                <button class="btnblue" id="proceedbtn">Proceed To Account</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer>
+    <a>Terms</a>
+    <a>FAQ</a>
+    <a>Contact Us</a>
+    <img class="img" src="{{url_for('static', filename='images/covid.svg')}}" />
+</footer>
+</div>
+</body>
+<script src="{{url_for('static', filename='js/landingpage.js')}}"></script>
+{% endblock %}

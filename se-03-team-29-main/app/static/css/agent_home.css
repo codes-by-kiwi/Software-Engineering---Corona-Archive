@@ -1,0 +1,481 @@
+.content {
+    width: 100%;
+    height: 93%;
+    display: flex;
+}
+
+h1 {
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    width: 100%;
+    height: 7%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar h1 {
+    padding-left: 30px;
+}
+
+
+.sidebar {
+    width: 10%;
+    background-color: #006DBA;
+}
+
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    color: #F2F6FD;
+    font-size: 18px;
+}
+
+.sidebar_top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 30px;
+    padding-top: 70px;
+}
+
+.sidebar_bottom {
+    padding-bottom: 30px;
+}
+
+.sidebtn {
+    color: #CDDFFF;
+    background-color: #006DBA;
+    border: none;
+    transition: 200ms;
+}
+
+.sidebtn:hover {
+    cursor: pointer;
+    color: white;
+    transition: 200ms;
+}
+
+.activebtn {
+    color: white;
+}
+
+.logout:hover {
+    color: #D2160D;
+}
+
+.maincontent {
+    width: 90%;
+    background-color: #F2F6FD;
+}
+
+.interface {
+    background-color: white;
+    border-radius: 4px;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0px 2px 6px grey;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+}
+
+
+.interface_container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.type_selector {
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+#searchbtn {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
+
+.filterbtn {
+    width: 20%;
+    height: 100%;
+    border: solid 1px black;
+}
+
+.filterbtn {
+    color: #006DBA;
+    border: none;
+    background-color: white;
+    transition: 200ms;
+}
+
+.filterbtn:hover {
+    cursor: pointer;
+    color: #0583DC;
+    transition: 200ms;
+    border-bottom: solid 1px #0583DC;
+}
+
+.filterbtn_active {
+    border-bottom: solid 3px #006DBA;
+    transition: 100ms;
+}
+
+.interfacebtn {
+    background-color: #006DBA;
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+.interfacebtn:hover {
+    background-color: #0583DC;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+
+.table {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+}
+
+input {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
+
+.visitor_table {
+    width: 100%;
+    height: 100%;
+}
+
+.place_table {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+
+.visitor_row {
+    border-bottom: solid 1px #E0E0E0;
+    max-height: 40px !important;
+}
+
+tr {
+    height: 50px;
+}
+
+.infected_person:hover {
+    background-color: #E0E0E0;
+    cursor: pointer;
+}
+
+.infected_person {
+    padding: 0;
+}
+
+
+/* Table column width setters */
+
+.name_column {
+    width: 10%;
+}
+
+.address_column {
+    width: 10%;
+}
+
+.email_column {
+    width: 16%;
+}
+
+.phone_column {
+    width: 16%;
+}
+
+.id_column {
+    width: 30%;
+}
+
+.infection_column {
+    width: 10%;
+}
+
+.header_text {
+    font-weight: bolder;
+    padding-bottom: 10px;
+}
+
+/* End table column with setting */
+
+
+/* Setting styling for visitor popup */
+
+.visitor_content {
+    height: 70%;
+    border-radius: 10px;
+    background-color: #F2F6FD;
+    overflow: hidden;
+}
+
+.visitor_inner_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkin_history {
+    overflow-y: scroll;
+    width: 70%;
+}
+
+.greytext {
+    color: #7a7b8f;
+    padding: 5px;
+}
+
+
+.place_content {
+    height: 70%;
+    border-radius: 10px;
+    background-color: #F2F6FD;
+    overflow: hidden;
+}
+
+.place_inner_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#place_history_table {
+    height: 100%;
+    width: 100%;
+}
+
+.visitor_top_text {
+    padding: 20px;
+}
+
+#history_table {
+    height: 100%;
+    width: 100%;
+}
+
+.place_table {
+    width: 100%;
+    height: 100%;
+}
+
+.place_history:hover {
+    background-color: #E0E0E0;
+    cursor: pointer;
+}
+
+
+#hospital_registration_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+#result_display {
+    border: solid 1px black;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.registration_form {
+    display: flex;
+    flex-direction: column;
+}
+
+.registerbtn {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
+
+.registration_header {
+    font-size: 20px;
+}
+
+.registration_warning {
+    color: #7a7b8f;
+}
+
+.agent_hospital_error {
+    color: #D2160D;
+    padding: 2px;
+    margin: 2px;
+}
+
+
+@media screen and (max-width: 1750px) {
+    .sidebar {
+        width: 15%;
+    }
+
+}
+
+@media screen and (max-width: 1135px) {
+    .sidebar {
+        width: 20%;
+    }
+
+    .interface {
+        width: 95%;
+    }
+
+}
+
+@media screen and (max-width: 880px) {
+    .sidebar {
+        width: 20%;
+    }
+
+    .sidebar_top {
+        padding-left: 5px;
+    }
+
+    .interface {
+        width: 95%;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .sidebar {
+        width: 20%;
+    }
+
+    .sidebar_top {
+        padding-left: 5px;
+    }
+
+    .interface {
+        width: 95%;
+    }
+
+}
+
+@media screen and (max-width: 470px) {
+
+    .content {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .maincontent {
+        width: 100%;
+    }
+
+    .sidebar {
+        flex-direction: row;
+        width: 100%;
+        height: 10%;
+        align-items: center;
+    }
+
+    .sidebar_top {
+        flex-direction: row;
+        padding-top: 0;
+    }
+
+    .interface_container {
+        justify-content: initial;
+    }
+
+    .type_selector {
+        height: fit-content;
+    }
+
+    .filterbtn {
+        height: 30px;
+    }
+
+    .search_tools {
+        width: 100%;
+        ;
+    }
+
+    .visitor_search {
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+
+    #name_input {
+        width: 50%;
+    }
+
+    .selector button {
+        padding: 5px;
+    }
+
+    .forms button {
+        padding: 5px;
+
+    }
+
+    .formbtn {
+        width: 100px;
+        align-self: flex-end;
+    }
+
+    .forms button,
+    .forms input {
+        font-size: 15px !important;
+    }
+
+    .navbar {
+        width: initial;
+    }
+
+
+
+}
+
+@media screen and (max-width: 340px) {
+
+    .navbar {
+        width: initial;
+    }
+
+    .content {
+        min-width: 200px;
+        width: 30%;
+    }
+
+}

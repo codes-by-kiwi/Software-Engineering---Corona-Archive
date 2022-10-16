@@ -1,0 +1,428 @@
+{% extends 'layout.html' %}
+{% block head %}
+<title>Agent Home</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/agent_home.css')}}" />
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="sidebar">
+        <div class="sidebar_top">
+            <button class="sidebtn activebtn" id="visitor_lookupbtn" onclick="visitorLookup()">Visitor Lookup</button>
+            <button class="sidebtn" id="place_lookupbtn" onclick="placeLookup()">Place Lookup</button>
+            <button class="sidebtn" id="hospital_registrationbtn" onclick="hospitalRegistration()">Hospital
+                Reg</button>
+        </div>
+        <div class="sidebar_bottom">
+            <button class="sidebtn logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="maincontent">
+        <div class="interface_container">
+            <div class="search_tools">
+                <form class="visitor_search">
+                    <input type="text" placeholder="Visitor name" name="visitor_name" id="name_input" />
+                    <input type="text" placeholder="Place name" name="place_name" style="display: none"
+                        id="place_input" />
+                    <button type="button" onclick="searchVisitor()" id="searchbtn" class="interfacebtn">Search</button>
+                </form>
+            </div>
+            <div class="interface">
+                <div class="type_selector">
+                    <button class="filterbtn filterbtn_active" id="showallbtn" onclick="showAll()">All</button>
+                    <button class="filterbtn" id="showinfectedbtn" onclick="showInfected()">Infected</button>
+                </div>
+                <div class="table">
+                    <div id="hospital_registration_form" style="display: none;">
+                        <div>
+                            <p class="registration_header">Provide a unique username and a password will be generated
+                                for you</p>
+                            <p class="registration_warning">Please make sure to store this password safely as it will
+                                not be shown
+                                again</p>
+                        </div>
+                        <form class="registration_form">
+                            <input type="text" placeholder="New Hospital Username" id="hospital_register_username"
+                                required>
+                            <p id="hospital_register_error" style="display: none;" class="agent_hospital_error"></p>
+                            <button type="button" class="interfacebtn registerbtn" onclick="register_hospital()">Create
+                                Hospital
+                                Account</button>
+                        </form>
+                        <p id="result_display" style="display: none;"><span class="greytext">Username:</span> <span
+                                id="username_display"></span><br>
+                            <span class="greytext">Generated Password:</span> <span id="password_display"></span></p>
+                    </div>
+                    <table class="visitor_table">
+                        <thead>
+                            <tr>
+                                <th class="name_column header_text">
+                                    Visitor Name
+                                </th>
+                                <th class="address_column header_text">
+                                    Address
+                                </th>
+                                <th class="email_column header_text">
+                                    Email
+                                </th>
+                                <th class="phone_column header_text">
+                                    Phone
+                                </th>
+                                <th class="id_column header_text">
+                                    Device Id
+                                </th>
+                                <th class="infection_column header_text">
+                                    Infection Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="visitor_tableBody">
+
+                        </tbody>
+                    </table>
+                    <table class="place_table" style="display: none;">
+                        <thead>
+                            <tr id="header">
+                                <th class="name_column header_text">
+                                    Place Name
+                                </th>
+                                <th class="address_column header_text">
+                                    Address
+                                </th>
+                                <th class="id_column header_text">
+                                    Place ID
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="place_tableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="w3-container">
+            <div id="visitorModal" class="w3-modal">
+                <div class="w3-modal-content visitor_content">
+                    <div class="w3-container visitor_inner_container">
+                        <span onclick="document.getElementById('visitorModal').style.display='none'"
+                            class="w3-button w3-display-topright">&times;</span>
+                        <div class="visitor_top_text">
+                            <p><span class="greytext">Visitor Name:</span> <span id="visitor_name"></span></p>
+                            <p><span class="greytext">Device ID:</span> <span id="visitor_id"></span></p>
+                        </div>
+                        <div class="checkin_history">
+                            <table id="history_table">
+                                <thead>
+                                    <tr id="header">
+                                        <th>
+                                            Place
+                                        </th>
+                                        <th>
+                                            Checked In
+                                        </th>
+                                        <th>
+                                            Checked Out
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w3-container">
+            <div id="placeModal" class="w3-modal" style="display: none;">
+                <div class="w3-modal-content place_content">
+                    <div class="w3-container place_inner_container">
+                        <span onclick="document.getElementById('placeModal').style.display='none'"
+                            class="w3-button w3-display-topright">&times;</span>
+                        <div>
+                            <p>Place Name: <span id="place_name"></span></p>
+                        </div>
+                        <div class="checkin_history">
+                            <table id="place_history_table">
+                                <thead>
+                                    <tr id="header">
+                                        <th>
+                                            Visitor Name
+                                        </th>
+                                        <th>
+                                            Visitor ID
+                                        </th>
+                                        <th>
+                                            Checked In
+                                        </th>
+                                        <th>
+                                            Checked Out
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="placeHistory_tableBody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    let show = "All";
+    let visitor_data = []
+    let place_data = []
+
+    function showAll() {
+        show = "All"
+        $("#showallbtn").addClass("filterbtn_active");
+        $("#showinfectedbtn").removeClass("filterbtn_active");
+        setVisitors()
+    }
+
+    function showInfected() {
+        show = "Infected"
+        $("#showallbtn").removeClass("filterbtn_active");
+        $("#showinfectedbtn").addClass("filterbtn_active");
+        setVisitors()
+    }
+
+    function fetchVisitors() {
+        $.get('/visitor_fetch', (response) => {
+            visitor_data = JSON.parse(response)
+            if (response.length == 0)
+                noVisitors()
+            else
+                setVisitors()
+        })
+    }
+
+    fetchVisitors();
+
+    function setVisitors() {
+        data = ''
+
+        if (show === "All") {
+            for (let i = 0; i < visitor_data.length; i++) {
+                if (visitor_data[i]['infected'] == 1)
+                    data +=
+                    `<tr onclick="popup(event)" class="infected_person visitor_row" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']}><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['address']}</td><td>${visitor_data[i]['email']}</td><td>${visitor_data[i]['phone_number']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td></tr>`
+                else
+                    data +=
+                    `<tr class="visitor_row" ><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['address']}</td><td>${visitor_data[i]['email']}</td><td>${visitor_data[i]['phone_number']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td></tr>`
+            }
+
+            // onclick = "popup(event)"
+        } else {
+            for (let i = 0; i < visitor_data.length; i++) {
+                if (visitor_data[i]['infected'] == 1)
+                    data +=
+                    `<tr  onclick="popup(event)" class="infected_person visitor_row" data-visitor_name=${visitor_data[i]['visitor_name']} data-device_id=${visitor_data[i]['device_id']}><td>${visitor_data[i]['visitor_name']}</td><td>${visitor_data[i]['address']}</td><td>${visitor_data[i]['email']}</td><td>${visitor_data[i]['phone_number']}</td><td>${visitor_data[i]['device_id']}</td><td>${visitor_data[i]['infected'] == 0 ? '🟢' : '🔴'}</td></tr>`
+            }
+        }
+        $("#visitor_tableBody").html(data)
+    }
+
+
+    function searchVisitor() {
+        let name = document.querySelector('input[name="visitor_name"]').value;
+        // let device_id = document.querySelector('input[name="device_id"]').value;
+        device_id = ''
+
+        $.post(
+            "/agent_visitor_lookup", {
+                visitor_name: name,
+                device_id: device_id,
+            },
+            (response) => {
+                visitor_data = JSON.parse(response)
+                setVisitors()
+            }
+        );
+    }
+
+    function searchPlace() {
+        let place_name = document.querySelector('input[name="place_name"]').value;
+
+        $.post(
+            "/agent_place_lookup", {
+                place_name: place_name,
+            },
+            (response) => {
+                place_data = JSON.parse(response)
+                setPlaces()
+            }
+        );
+    }
+
+    function setPlaces() {
+        data = ''
+
+        for (let i = 0; i < place_data.length; i++) {
+            data +=
+                `<tr class="place_history visitor_row" onclick="place_popup(event)" data-place_id=${place_data[i]['place_id']} data-place_name=${place_data[i]['place_name']}><td>${place_data[i]['place_name']}</td><td>${place_data[i]['address']}</td><td>${place_data[i]['place_id']}</td></tr>`
+        }
+        $("#place_tableBody").html(data)
+    }
+
+    function place_popup(event) {
+        let place_id = event.currentTarget.dataset.place_id;
+        let place_name = event.currentTarget.dataset.place_name;
+
+        $("#place_name").html(place_name);
+        document.getElementById("placeModal").style.display = "block";
+
+
+        $.post('/agent_place_history', {
+            place_id: place_id
+        }, (response) => {
+            response = JSON.parse(response)
+            if (response.length == 0)
+                noHistoryPlace()
+            else
+                setPlaceHistory(response)
+        })
+
+    }
+
+    function setPlaceHistory(response) {
+        data = ''
+
+        for (let i = 0; i < response.length; i++) {
+            data +=
+                `<tr><td>${response[i]['visitor_name']}</td><td>${response[i]['visitor_id']}</td><td>${response[i]['entry_time']}</td><td>${response[i]['exit_time']}</td></tr>`
+        }
+        $("#placeHistory_tableBody").html(data)
+    }
+
+    function visitorLookup() {
+        // setting active class for styling on the currently active page
+        $("#visitor_lookupbtn").addClass("activebtn");
+        $("#place_lookupbtn").removeClass("activebtn");
+        $("#hospital_registrationbtn").removeClass("activebtn");
+
+
+        $(".visitor_table").css("display", "table");
+        $("#name_input").css("display", "initial");
+        $(".type_selector").css("display", "initial");
+        $(".place_table").css("display", "none");
+        $("#place_input").css("display", "none");
+        $("#searchbtn").attr("onclick", "searchVisitor()");
+        $("#hospital_registration_form").css("display", "none");
+        $("#searchbtn").css("display", "initial");
+    }
+
+    function placeLookup() {
+        // setting active class for styling on the currently active page
+        $("#visitor_lookupbtn").removeClass("activebtn");
+        $("#place_lookupbtn").addClass("activebtn");
+        $("#hospital_registrationbtn").removeClass("activebtn");
+
+
+
+        $(".visitor_table").css("display", "none");
+        $(".type_selector").css("display", "none");
+        $("#name_input").css("display", "none");
+        $(".place_table").css("display", "table");
+        $("#place_input").css("display", "initial");
+        $("#searchbtn").attr("onclick", "searchPlace()");
+        $("#searchbtn").css("display", "initial");
+        $("#hospital_registration_form").css("display", "none");
+    }
+
+    function hospitalRegistration() {
+        // setting active class for styling on the currently active page
+        $("#visitor_lookupbtn").removeClass("activebtn");
+        $("#place_lookupbtn").removeClass("activebtn");
+        $("#hospital_registrationbtn").addClass("activebtn");
+
+
+        $(".visitor_table").css("display", "none");
+        $(".type_selector").css("display", "none");
+        $("#name_input").css("display", "none");
+        $(".place_table").css("display", "none");
+        $("#place_input").css("display", "none");
+        $("#searchbtn").css("display", "none");
+        $("#hospital_registration_form").css("display", "flex");
+    }
+
+    function logout() {
+        window.location.href = '/agent_logout';
+    }
+
+    function popup(event) {
+
+        let visitor_name = event.currentTarget.dataset.visitor_name;
+        let device_id = event.currentTarget.dataset.device_id;
+
+        console.log(device_id)
+        $("#visitor_name").html(visitor_name);
+        $("#visitor_id").html(device_id)
+
+        document.getElementById("visitorModal").style.display = "block";
+
+        $.post('/agent_visitor_history', {
+                device_id: device_id
+            },
+            (response) => {
+                response = JSON.parse(response)
+
+                if (response.length == 0)
+                    noHistory()
+                else setHistory(response)
+            })
+    }
+
+    function setHistory(response) {
+        data = ''
+
+        for (let i = 0; i < response.length; i++) {
+            data +=
+                `<tr><td>${response[i]['place_name']}</td><td>${response[i]['entry_time']}</td><td>${response[i]['exit_time']}</td></tr>`
+        }
+        $("#tableBody").html(data)
+    }
+
+    function noHistory() {
+        $('#history_table').html('<p>Visitor has not checked into any place yet</p>')
+    }
+
+    function noHistoryPlace() {
+        $('#place_history_table').html('<p>Place has not had any visitors yet</p>')
+    }
+
+    function register_hospital() {
+        if (!document.getElementById('hospital_register_username').validity.valid) {
+            $("#hospital_register_error").html("Please enter a valid username")
+            $("#hospital_register_error").css("display", "initial")
+            $("#result_display").css("display", "none")
+
+        } else {
+            $("#hospital_register_error").css("display", "none")
+
+            let hospital_username = $("#hospital_register_username").val()
+
+            $.post('/agent_register_hospital', {
+                hospital_username: hospital_username
+            }, (response) => {
+                if (response == "None") {
+                    $("#hospital_register_error").html("Username is already being used, please enter again")
+                    $("#hospital_register_error").css("display", "initial")
+                    $("#result_display").css("display", "none")
+                } else {
+                    $("#username_display").html(hospital_username)
+                    $("#password_display").html(response)
+                    $("#result_display").css("display", "initial")
+                }
+            })
+        }
+    }
+</script>
+{% endblock %}

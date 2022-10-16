@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Place | Corona Archive</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/place_home.css')}}" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content">
+    <div class="maincontent">
+        <img src="data:image/jpeg;base64,{{ encoded_image }}">
+        <a href="data:image/jpeg;base64,{{ encoded_image }}" download="QR code" target="_blank"
+            class="et_pb_button"><button id="qr" type="button" class="interfacebtn">Download
+                QR</button></a>
+        <h1 class="boldtext">QR code generated</h1>
+        <button onclick="logout()" id="logoutbtn">Delete Account and Logout </button>
+    </div>
+</div>
+<script>
+    function downloadQR() {
+        var qr = document.querySelector('#qr')
+    }
+
+    function logout() {
+        window.location.href = '/place_logout'
+    }
+</script>
+
+{% endblock %}

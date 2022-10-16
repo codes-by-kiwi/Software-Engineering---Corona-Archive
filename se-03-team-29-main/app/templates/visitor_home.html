@@ -1,0 +1,142 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Visitor Home</title>
+<link rel="stylesheet" href="{{url_for('static', filename='css/visitor_home.css')}}" />
+{% endblock %}
+{% block content %}
+<div class="content">
+    <div class="maincontent">
+        <div class="left_content">
+            <div class="checkin_history" id="history_table_container">
+                <!-- generated html will go here -->
+            </div>
+        </div>
+        <div class="right_content">
+            <div class="checkin">
+                <div id="not_checkedin">
+                    <p class="greytext">You are not checked in anywhere</p>
+                    <button id="checkinbtn" class="interfacebtn" onclick="scanin_page()">CHECK IN -></button>
+                </div>
+                <div id="checked_in">
+                    <p id="name_setter"><span class="greytext">Checked in at: </span> <span id="place_name"></span></p>
+                    <p><span id="description">Time Elapsed:</span><span id="time">00:00:00</span></p>
+                    <button id="checkoutbtn" onclick="checkout()">CHECK OUT NOW</button>
+                </div>
+            </div>
+            <div class="visitor_info">
+                <p><span class="greytext">Full Name</span><br><span id="full_name"></span></p>
+                <p><span class="greytext">Email</span> <br><span id="email"></span></p>
+                <p><span class="greytext">Address </span></span> <br> <span id="address"></span></p>
+                <p><span class="greytext">Phone Number</span> <br><span id="phone"></span></p>
+                <p><span class="greytext">Infection Status </span><br><span id="infection_status"></span></p>
+                <button onclick="logout()" id="logoutbtn">Delete Account and Logout </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let entry_time;
+    let visitor_info = {}
+
+    $.get('/visitor_history',
+        (response) => {
+            response = JSON.parse(response)
+
+            if (response.length == 0)
+                noHistory()
+            else setHistory(response)
+        })
+
+    $.get('/visitor_check',
+        (response) => {
+            if (response == "None") setNotCheckedin()
+            else setCheckedin(JSON.parse(response))
+        }
+    )
+
+    $.get('/visitor_info', (response) => {
+        if (response != "None")
+            visitor_info = JSON.parse(response)
+
+        set_visitor_info()
+
+    })
+
+    function logout() {
+        window.location.href = '/visitor_logout'
+    }
+
+    function set_visitor_info() {
+        $("#full_name").html(visitor_info['visitor_name'] != '' ? visitor_info['visitor_name'] : "None");
+        $("#address").html(visitor_info['address'] != '' ? visitor_info['visitor_name'] : "None");
+        $("#email").html(visitor_info['email'] != '' ? visitor_info['email'] : "None");
+        $("#phone").html(visitor_info['phone_number'] != '' ? visitor_info[
+            'phone_number'] : "None");
+        $("#infection_status").html(visitor_info['infection_status'] == 0 ? '🟢' : '🔴');
+    }
+
+    function noHistory() {
+        $('#history_table_container').html(
+            `<div id="png_container"><img src="{{url_for('static', filename='images/notcheckedin.png')}}"><p class="greytext">You have not checked into any place yet</p></div>`
+        )
+    }
+
+    function setHistory(response) {
+        data = '<p class="boldtext">Checkin History</p>'
+
+        for (let i = 0; i < response.length; i++) {
+            entry =
+                `<div class="history_entry"><p><span class="greytext">Place Name :</span>${response[i]['place_name']}</p><p><span class="greytext">Checked in at :</span>${response[i]['entry_time']}</p><p><span class="greytext">Checked out at :</span>${response[i]['exit_time']}</p></div>`
+
+            data += entry
+        }
+        $("#history_table_container").html(data)
+    }
+
+    function checkout() {
+        $.get('/visitor_checkout', (response) => {
+            if (response == "None")
+                window.location.href = '/visitor_home'
+        })
+    }
+
+    function scanin_page() {
+        window.location.href = '/visitor_scanin'
+    }
+
+    function setCheckedin(response) {
+        entry_time = new Date(response['entry_time'])
+
+        setInterval(setTime, 1000);
+
+        $('#not_checkedin').css("display", "none")
+        $('#place_name').html(response['place'])
+    }
+
+    function setNotCheckedin() {
+        $('#checked_in').css("display", "none")
+    }
+
+    function miliToHRS(milliseconds) {
+        let seconds = Math.floor(milliseconds / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let hours = Math.floor(minutes / 60);
+
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+
+        return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+    }
+
+    function setTime() {
+        let totalSeconds = Math.abs(Date.now() - entry_time);
+        time = miliToHRS(totalSeconds)
+        $('#time').html(time)
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+</script>
+{% endblock %}
