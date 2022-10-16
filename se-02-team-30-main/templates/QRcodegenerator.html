@@ -1,0 +1,67 @@
+{%extends 'base.html' %}
+
+{% block header %} 
+<!-- QRcode Generator-->
+{% endblock %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <!--<title> Login and Registration Form in HTML & CSS</title>-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signinStyle.css') }}">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="qrcode.js"></script>
+   </head>
+
+<body>
+  <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front"> 
+
+        <div class="text">
+          <span class="text-1">Fight Corona<br> Together</span>
+          <span class="text-2">Let's get connected</span>
+        </div>
+
+      </div>
+      <div class="back">
+      </div>
+    </div>
+    <div class="forms">
+
+        <div class="form-content">
+          <div class="login-form">
+          <div class="title">QR Code Generator</div>
+
+          <div class ="qrcode">Name of place...</div>
+          <input type="text" id="qr.data" onchange="generateQR()" />
+          <div id="qrcode"></div>
+
+        <a href="{{ url_for('landing') }}" class="home">Home</a>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
+<script type="text/javascript" src="qrcode.min.js">
+  var qrdata = document.getElementById("qr.data");
+  var qrcode = new QRCode(document.getElementById("qrcode"));
+  function generateQR() {
+    var data = qrdata.value;
+    qrcode.makeCode(data);
+  }
+</script> 
+</body> 
+
+</html>
+{% endblock %}

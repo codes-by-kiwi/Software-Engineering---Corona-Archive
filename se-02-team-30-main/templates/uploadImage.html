@@ -1,0 +1,100 @@
+{%extends 'base.html' %}
+
+{% block header %} 
+<!-- Upload Image -->
+{% endblock %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <!--<title> Login and Registration Form in HTML & CSS</title>-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signinStyle.css') }}">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+
+<body>
+  <div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <!--<img src="images/frontImg.jpg" alt="">-->
+
+        <div class="text">
+          <span class="text-1">Fight Corona<br> Together</span>
+          <span class="text-2">Let's get connected</span>
+        </div>
+
+      </div>
+      <div class="back">
+        <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
+      </div>
+    </div>
+    <div class="forms">
+
+        <div class="form-content">
+          <div class="login-form">
+            <div class="title">Vaccination Certificate</div>
+
+            <!-- <form action="/uploadImage" method="POST" enctype="multipart/form-data">
+				
+              <div class="Corona">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="image" id="image">
+                  <label class="custom-file-label" for="image">Select Image...</label>
+                </div>
+              </div>
+       
+            </form> -->
+
+            <form action="/uploadImage" method="POST" enctype="multipart/form-data">
+              <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="file" placeholder="Upload Image" name="image" id="image" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Submit">
+            </form>
+
+        <a href="{{ url_for('landing') }}" class="home">Home</a>
+    </div>
+    </div>
+    </div>
+
+  </div>
+</body>
+</html>
+
+
+<!-- <div class="circle"></div>
+
+<div class="content">
+	<div class="textbox">
+
+			<h1> Upload Image of your vaccination records </h1>
+			<hr>
+
+			<form action="/uploadImage" method="POST" enctype="multipart/form-data">
+				
+				<div class="Corona">
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" name="image" id="image">
+						<label class="custom-file-label" for="image">Select Image...</label>
+					</div>
+				</div>
+
+			</form>
+
+	</div>
+
+	<div class="imgBox">
+		<img src="../static/COVID.jpg" class="Corona">
+	</div>
+
+</div> -->
+{% endblock %}
