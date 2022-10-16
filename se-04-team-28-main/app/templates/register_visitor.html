@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Visitor Registration</title>
+{% endblock%}
+
+
+{% block navbar %}
+<!-- <a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a> -->
+{% endblock %}
+
+
+{% block content %}
+
+<form class="form-container" action="/register_visitor" method="POST">
+    <h2 class="action-title-text"> VISITOR REGISTRATION </h2> <br>
+
+    <input type="text" class="form-control" name="fullname" placeholder="Full Name" value="{{fields[0]}}" />
+    <input type="text" class="form-control" name="address" placeholder="Address" value="{{fields[1]}}" />
+    <input type="tel" class="form-control" name="phonenumber" placeholder="Phone Number" value="{{fields[2]}}" />
+    <input type="email" class="form-control" name="email" placeholder="Email" value="{{fields[3]}}" />
+    
+    <label class="error"> {{prompt}} </label>
+    <div class="center">
+        <button type="submit" class="action-btn"> SUBMIT </button>
+    </div>
+</form>
+
+<script>
+    
+</script>
+{% endblock %}

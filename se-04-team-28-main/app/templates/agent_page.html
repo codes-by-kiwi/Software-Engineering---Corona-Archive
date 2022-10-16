@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Agent home</title>
+{% endblock %}
+
+
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a>
+<a style="float:right" href="{{ url_for('agent_routes.logout_agent')}}"> Log out </a>
+{% endblock %}
+
+
+{% block content %}
+<div class="agent-dashboard">
+  <h1 class="title-text"> Agent Dashboard </h1> <br>
+
+  <div class="action-area" style="width: 300px">
+    <h2 class="action-title-text"> Welcome, {{session['agent']}}! </h2> <br>
+    <div style="display: grid; grid-template-columns: auto; gap: 10px;">
+      <a href="/register_hospital" class="redirect-btn"> Add/View Hospitals </a>
+      <a href="/search_database" class="redirect-btn"> Search Database </a>
+    </div>
+    <div class="center">
+      <button type="button" onclick="getData()" class="action-btn" style="margin-top: 20px; width: 150px">
+        Export data
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getData() {
+    // TODO
+  }
+</script>
+{% endblock content%}

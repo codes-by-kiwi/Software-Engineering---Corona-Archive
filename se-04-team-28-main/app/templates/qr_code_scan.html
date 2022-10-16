@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Scan QR</title>
+{% endblock %}
+
+
+{% block navbar %}
+<!-- <a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a> -->
+<a style="float:right" href="{{ url_for('visitor_routes.logout_visitor')}}"> Log out </a> 
+{% endblock %}
+
+
+{% block content %}
+<div class="background-img-container">
+    <img src="static/img/background.jpg" alt="background image" class="background-img">
+</div>
+<div class="qr-scan-container">
+    <h1 class="title-text qr-scan"> Scan QR Code </h1> <br>
+    <div class="tight-action-area">
+        <video id="webcam-preview"></video>
+        <p> {{id}} </p> <br>
+        <button class="action-btn" onclick="visitorScanIn()"> Scan In </button>
+    </div>
+</div>
+<h2>{{prompt}}</h2>
+
+<script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+<script>
+    function redirect(result) {
+        window.location.assign("/place/" + result);
+    }
+
+    // Start webcam
+    function visitorScanIn() {
+        const codeReader = new ZXing.BrowserQRCodeReader();
+        codeReader.decodeFromVideoDevice(null, 'webcam-preview', (result, err) => {
+            if (result) {
+                redirect(result)
+            }
+        })
+    }
+</script>
+{% endblock %}

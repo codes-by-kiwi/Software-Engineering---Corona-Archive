@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Register Hospital</title>
+<meta id="my-data" data-name="{{success}}">
+{% endblock%}
+
+
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a>
+<a style="float:right" href="{{ url_for('agent_routes.logout_agent')}}"> Log out </a>
+{% endblock %}
+
+
+{% block content %}
+<!-- Create a 2x1 grid -->
+<div class="register-hospital">
+    <!-- Hospital registration form on the left -->
+    <form class="action-area" id="adding-hospital" action="/register_hospital" method="POST">
+        <h2 class="action-title-text"> HOSPITAL REGISTRATION </h2> <br>
+
+        <h3 class="action-text"> Hospital name: </h3>
+        <input type="text" class="form-control" name="username" value="{{fields[0]}}" />
+        
+        <label id="result" class="error">{{prompt}}</label>
+        <div class="center">
+            <button type="submit" class="action-btn" type="button">
+                SUBMIT
+            </button>
+        </div>
+    </form>
+    <!-- Database on the right -->
+    <form class="action-area" id="hospital-list">
+        <div class="center">
+            <!-- Button to toggle viewing hospitals -->
+            <button class="action-btn" onclick="search()" type="button" id="display_btn">
+                Show list of Hospitals
+            </button>
+        </div> <br>
+        <table id="hospitals_table">
+            <thead>
+                <tr>
+                    <th style="width: 70%">Username</th>
+                    <th style="width: 30%">Password</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+    // Change error text to blue if hospital registration is valid
+    var success = $('#my-data').data();
+    if (success.name == 'True') {
+        $('#result').css("color", "#4444ff");
+    }
+
+    /* Update button text. if the button was saying "Show all hospitals",
+       send a /gethospitals request to data_routes to query all hospitals */
+    function search() {
+        let btn = document.getElementById("display_btn");
+        if (btn.innerHTML != "Hide list of Hospitals") {
+            btn.innerHTML = "Hide list of Hospitals"
+            $.post(
+                "/gethospitals",
+                (res) => {
+                    update_table(JSON.parse(res));
+                }
+            );
+        }
+        else {
+            btn = btn.innerHTML = "Show list of Hospitals"
+            update_table(null)
+        }
+    }
+
+    // Update database table
+    function update_table(hospitals) {
+        let tbody = document.getElementById("tbody");
+        tbody.innerHTML = ``;
+        if (hospitals != null) {
+            for (let i = 0; i < hospitals.length; i++) {
+                tbody.innerHTML += `<tr><td>${hospitals[i][1]}</td><td>${hospitals[i][2]}</td></tr>`;
+            }
+        }
+    }
+</script>
+{% endblock %}

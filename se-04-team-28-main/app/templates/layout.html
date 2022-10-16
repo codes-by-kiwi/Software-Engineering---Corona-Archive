@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="main">
+        <h2 style="color:White">Corona Management Website</h2>
+        <span class="navcol" id="openthenav"> &#x2630; Sidebar</span>
+    </div> 
+
+    <div class="sidenav" id="theSidenav">
+        <a href="#" class="closebtn" id="closebtn">&times;</a>
+        <ul>
+            <li>
+                <a href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('about') }}"> About </a>
+            </li>
+        </ul>
+    </div>
+
+  
+
+        <!-- Child templates content will go here after extending -->
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+        <script >
+        document.getElementById("openthenav").addEventListener("click",function(){
+            document.getElementById("theSidenav").style.width="250px";
+            document.getElementById("main").style.marginLeft="250px";
+            document.body.style.backgroundColor="rgb(0,0,0,0.6)"
+
+        })
+
+        document.getElementById("closebtn").addEventListener("click",function(){
+            document.getElementById("theSidenav").style.width="0px";
+            document.getElementById("main").style.marginLeft="0px";
+            document.body.style.backgroundColor=""
+        })
+        
+    </script>
+
+</body>
+
+</html>

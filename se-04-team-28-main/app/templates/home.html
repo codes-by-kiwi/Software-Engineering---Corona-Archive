@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Corona Archive</title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="background-img-container">
+    <img src="static/img/background.jpg" alt="background image" class="background-img">
+</div>
+
+<div class="page-center-container">
+
+    <div class="page-center">
+        <h1 class="title-text" style="color:black"> Corona Archive </h1> <br>
+        <p class="title-description">tracking, displaying and evaluating your Corona infection data to protect you and your loved ones from COVID-19.</p>
+
+            <a class="redirect-btn" href="#choice">GET STARTED</a>
+        </div>
+        
+    
+</div>
+
+<div class="action-area">
+    <h2 class="action-title-text"> CHOOSE ACCOUNT TYPE </h2> <br>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+        <a href="/register_visitor" class="redirect-btn"> Visitor </a>
+        <a href="/register_place" class="redirect-btn"> Place owner </a>
+        <a href="/login_agent" class="redirect-btn"> Agent </a>
+        <a href="/login_hospital" class="redirect-btn"> Hospital </a>
+    </div>
+</div>
+
+<div id="choice"></div>
+
+<div class="footer">
+    <p>This website is student lab work and does not necessarily reflect Jacobs University Bremen opinions. Jacobs University Bremen does not endorse this site, nor is it checked by Jacobs University Bremen regularly, nor is it part of the official Jacobs University Bremen web presence. </p>
+    <p>For each external link existing on this website, we initially have checked that the target page does not contain contents which is illegal wrt. German jurisdiction. However, as we have no influence on such contents, this may change without our notice. Therefore we deny any responsibility for the websites referenced through our external links from here. </p>
+    <p>No information conflicting with GDPR is stored in the server. </p>
+</div>
+{% endblock %}

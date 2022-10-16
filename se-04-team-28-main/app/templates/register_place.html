@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Register PlaceOwner</title>
+{% endblock %}
+
+
+{% block navbar %}
+<!-- <a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a> -->
+{% endblock %}
+
+
+{% block content %}
+<form class="form-container" action="/register_place" method="POST">
+    <h2 class="action-title-text"> PLACE OWNER REGISTRATION </h2> <br>
+
+
+    <input type="text" class="form-control" name="placename" placeholder="Place Name" />
+    <input type="text" class="form-control" name="address" placeholder="Address" />
+    
+    <label class="error"> {{prompt}} </label>
+    <div class="center">
+        <button type="submit" class="action-btn"> SUBMIT </button>
+    </div>
+</form>
+{% endblock content%}

@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Visitor Search</title>
+<style>
+    tr:hover {
+        background-color: #7e7268;
+        cursor: pointer;
+    }
+</style>
+{% endblock%}
+
+
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a>
+<a style="float:right" href="{{ url_for('agent_routes.logout_agent')}}"> Log out </a>
+{% endblock %}
+
+
+{% block content %}
+<!-- Create a 2x1 grid -->
+<div class="database-search-container" style="display: grid; grid-template-columns: auto auto; gap: 40px;">
+    <!-- Search form on the right -->
+    <div class="action-area" style="width: 275px; height: 400px">
+        <h2 class="action-title-text"> Search </h2> <br>
+        <div class="center" style="display: grid; grid-template-columns: auto auto; gap: 10px;">
+            <button type="button" onclick="visitorSearch()" id="visitor_button" class="action-btn"> Visitor </button>
+            <button type="button" onclick="placeSearch()" id="place_button" class="action-btn"> Place </button>
+        </div>
+        <!-- Search place options -->
+        <div id="place_search" style="margin-top: 20px; display: none">
+            <h3 class="action-text"> Search by name: </h3>
+            <input type="text" class="form-control" name="placename" />
+            <button type="button" onclick="searchPlace()" class="action-btn"> Search </button>
+        </div>
+        <!-- Search visitor options -->
+        <div id="visitor_search" style="margin-top: 20px; display: none">
+            <h3 class="action-text"> Search by name: </h3>
+            <input type="text" class="form-control" name="name" />
+            <h3 class="action-text"> Search by email: </h3>
+            <input type="text" class="form-control" name="email" />
+            <h3 class="action-text"> Search by phone number: </h3>
+            <input type="tel" class="form-control" name="phone" />
+            <button type="button" onclick="searchVisitor()" class="action-btn"> Search </button>
+        </div>
+    </div>
+    <!-- Database table on the right -->
+    <div class="table-view">
+        <h3 class="action-title-text" style="margin-bottom: 5px; text-align: left">
+            Click on a visitor to view place history
+        </h3>
+        <!-- Places table -->
+        <table id="place_table" style="display: none">
+            <thead>
+                <tr>
+                    <th>Place name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody id="place_tbody"></tbody>
+        </table>
+        <!-- Visitors table -->
+        <table id="visitor_table" style="display: none">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Name</th>
+                    <th style="width: 26%">Address</th>
+                    <th style="width: 26%">Email</th>
+                    <th style="width: 19%">Phone number</th>
+                    <th style="width: 9%">Infected</th>
+                </tr>
+            </thead>
+            <tbody id="visitor_tbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Toggle visibility of Visitors and Places elements
+    function visitorSearch() {
+        $("#place_search").css("display", "none");
+        $("#place_table").css("display", "none");
+        $("#visitor_search").css("display", "block");
+        $("#visitor_table").css("display", "block");
+        $("#visitor_button").css("border-style", "inset");
+        $("#place_button").css("border-style", "initial");
+    }
+
+    function placeSearch() {
+        $("#place_search").css("display", "block");
+        $("#place_table").css("display", "block");
+        $("#visitor_search").css("display", "none");
+        $("#visitor_table").css("display", "none");
+        $("#visitor_button").css("border-style", "initial");
+        $("#place_button").css("border-style", "inset");
+    }
+
+    // Send a /getusersagent request to data_routes to query all visitors with the search form
+    function searchVisitor() {
+        let name = document.querySelector('input[name="name"]').value;
+        let email = document.querySelector('input[name="email"]').value;
+        let phone = document.querySelector('input[name="phone"]').value;
+
+        $.post(
+            "/getusersagent", {
+                name: name,
+                email: email,
+                phone: phone,
+            },
+            (res) => {
+                update_table_visitors(JSON.parse(res));
+            }
+        );
+    }
+
+    // Send a /getplacesagent request to data_routes to query all places with the search form
+    function searchPlace() {
+        let name = document.querySelector('input[name="placename"]').value;
+
+        $.post(
+            "/getplacesagent", {
+                name: name,
+            },
+            (res) => {
+                update_table_places(JSON.parse(res));
+            }
+        );
+    }
+
+    // Update visitors table based on the search query
+    function update_table_visitors(visitors) {
+        let tbody = document.getElementById("visitor_tbody");
+        tbody.innerHTML = "";
+
+        for (let i = 0; i < visitors.length; i++) {
+            tbody.innerHTML +=
+                `<tr id="tableElement" onclick='check_history(${JSON.stringify(visitors[i])})'>
+                <td>${visitors[i][1]}</td>
+                <td>${visitors[i][2]  ? visitors[i][2] : "N/A"}</td>
+                <td>${visitors[i][4]  ? visitors[i][4] : "N/A"}</td>
+                <td>${visitors[i][3]}</td>
+                <td>${visitors[i][6] == 0 ? "No" : "Yes"}</td></tr>`;
+        }
+    }
+
+    // Update places table based on the search query
+    function update_table_places(places) {
+        let tbody = document.getElementById("place_tbody");
+        tbody.innerHTML = "";
+
+        for (let i = 0; i < places.length; i++) {
+            tbody.innerHTML +=
+                `<tr id="tableElement">
+                <td>${places[i][1]}</td>
+                <td>${places[i][2]}</td></tr>`;
+        }
+    }
+
+    // View visitor's place history (unfinished)
+    function check_history(visitor) {
+        if (confirm("Get visitor place history?")) {
+            return
+        }
+        // TODO
+    }
+</script>
+{% endblock content%}

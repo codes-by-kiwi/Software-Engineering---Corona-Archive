@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+
+{% block head %}
+<title>About</title>
+{% endblock %}
+
+<!--
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="#"> About </a>
+{% endblock %}
+-->
+
+
+{% block content %}
+
+<div class="explaination-text">
+<p> Corona Archive is a web service for tracking, displaying, evaluating, and archiving of the Corona infections in a particular location. </p> <br>
+<p> The web service is accessible to four types of users: </p> <br>
+<p> <b>Visitors:</b> Visitors can use the web service to indicate whether they have entered a particular place and when they have done so. In case of infection, visitors will be contacted by authorities. </p> <br>
+<p> <b>Places:</b> Places which are frequently visited by people. Place owners will be able to get a QR code. Citizens can scan this QR code to record their presence at that place. </p> <br>
+<p> <b>Agency:</b> The agency or the evaluation client can use the web service to generate corona-related reports by collecting data from the database and by registering hospitals and search for visitors. </p> <br>
+<p> <b>Hospital:</b> Hospitals can use the web service to mark people as infected and track anyone else that has been in contact with an infected person. </p> <br>
+</div>
+<br> <br>
+
+<div class="center" style="display: grid; grid-template-columns: 375px 305px 225px; gap: 40px;">
+    <div class="tight-action-area">
+        <h2 class="action-title-text"> Sprint 1 </h2> <br>
+        <h3 class="action-text"> Ilyas Benyamna </h3> <br>
+        <h3 class="action-text"> Sultan Sadiq Husain Siddiqui </h3>
+    </div>
+    <div class="tight-action-area">
+        <h2 class="action-title-text"> Sprint 2 </h2> <br>
+        <h3 class="action-text"> Zineb Laouzi </h3> <br>
+        <h3 class="action-text"> Minyahel Fekadu Haile </h3>
+    </div>
+    <div class="tight-action-area">
+        <h2 class="action-title-text"> Sprint 3 </h2> <br>
+        <h3 class="action-text"> Saad El Jadouri </h3> <br>
+        <h3 class="action-text"> Volen Terziev </h3>
+    </div>
+    <div class="tight-action-area">
+        <h2 class="action-title-text"> Sprint 4 </h2> <br>
+        <h3 class="action-text"> Fizza Usman </h3> <br>
+        <h3 class="action-text"> Vahid Menu Nesro </h3>
+    </div>
+</div>
+
+{% endblock %}

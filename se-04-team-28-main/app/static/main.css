@@ -1,0 +1,392 @@
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* overflow-y: hidden; */
+
+}
+
+/* Basic elements */
+
+body {
+    background: #7fa99b;
+    font-family: sans-serif;
+    background-color: #ffffff;
+}
+
+h1, h2, h3 {
+    font-family: sans-serif;
+}
+
+
+label, a {
+    color: #7fa99b;
+}
+
+
+/* Tables */
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th {
+    font-size: 16px;
+    border-spacing: 0;
+    width: 50%;
+    background-color: #665f5f;
+    color: #fff;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 6px;
+    border-collapse: collapse;
+    cursor: default;
+
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+/* Custom classes */
+
+.content {
+    margin: 20px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+div[class="background-img-container"]{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.background-img{
+    height: 100%;
+    width: 100%;
+    object-fit:cover;
+    overflow: hidden;
+    filter: blur(20%);
+    filter: grayscale(30%)
+}
+
+.page-center-container{
+    height: 100vh;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.page-center {
+    background-color: white;
+    color: black;
+
+    width: 45em;
+    height: 20em;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    place-content: center;
+
+
+    border-radius: 25px;
+
+   
+}
+
+/* Must be adjusted with a width property */
+
+.action-area {
+    height: 30em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.5em;
+
+
+
+    border-radius: 8px;
+    background: #fff;
+}
+
+
+
+/* Meant to be used in h1 */
+.title-text {
+    text-align: center;
+    color: white;
+}
+
+.title-description{
+    text-align: center;
+    width: 40em;
+    color:#504949;
+    display: flex;
+    margin: 0 auto;
+}
+
+/* Meant to be used in h2 */
+.action-title-text {
+    color: #504949;
+    text-align: center;
+}
+
+/* Meant to be used in h3 */
+.action-text {
+    color: #665f5f;
+}
+
+/* Meant to be used in label */
+.error {
+    text-align: center;
+    color: #ff2222;
+    font-weight: bold;
+}
+
+.redirect-btn {
+    padding: 20px 0px;
+    background-color: #fdc57b;
+    cursor: pointer;
+    font-size: 125%;
+    text-align: center;
+    color: #665f5f;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 150ms ease-in-out;
+
+    width: 10em;
+    margin: 0 auto;
+}
+
+.redirect-btn:hover {
+    background-color: #5a8b7e;
+    color: #fff;
+}
+
+.action-btn {
+    padding: 5px 15px;
+    margin: 5px;
+    background-color: #fdc57b;
+    cursor: pointer;
+    font-size: 110%;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    border-color: #fdc57b;
+    color: #665f5f;
+}
+
+
+/*
+.topnav {
+    overflow: hidden;
+    background-color: #fdc57b;
+}
+
+
+.topnav a {
+    float: left;
+    color: #665f5f;
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 15px 30px;
+}
+
+.topnav a:hover {
+    background-color: #5a8b7e;
+    color: #fff;
+    text-decoration: underline;
+    transition: 150ms ease-in-out;
+}
+*/
+
+div[id="main"]{
+	transition: margin-left 0.5s;
+	padding:20px;
+    background-color: #504949;
+    position: absolute;
+    width: 100vw;
+
+}
+
+#main span{
+	font-size: 20px;
+	cursor:pointer;
+}
+
+#main .navcol{
+	color: #ffffff;
+}
+.sidenav{
+	height: 100%;
+	width: 0px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #FFD580;
+	overflow: hidden;
+	transition: 0.5s;
+
+}
+
+.sidenav .closebtn{
+	font-size:36px;
+	border-bottom: none;
+	text-decoration: none;
+	color: #000000;
+	float: right;
+	margin-right: 25px;
+	margin-bottom: 50px;
+
+}
+
+.sidenav ul {
+	clear: both;
+}
+
+.sidenav ul li a{
+	padding: 12px 8px 12px 30px;
+	text-decoration: none;
+	font-size: 18px;
+	color: #000000;
+	display: block;
+	transition: 0.3s;
+	text-transform: uppercase;
+}
+
+.sidenav ul li a:hover{
+	background: #FF8C00
+}
+
+.form-container{
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    gap: 2em;
+    width: 30%;
+
+
+    color: rgb(255, 255, 255);
+    display: grid;
+    place-items: center;
+}
+
+.form-control{
+    border: none;
+    border-bottom: 1px solid rgb(100, 100, 100);
+    
+    outline: none;
+
+
+    width: 92%;
+    height: 3em;
+    font-size: medium;
+    display: inline-block;
+}
+
+.qr-scan-container{
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    gap: 2em;
+    width: 40%;
+
+    display: grid;
+    place-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    }
+
+h1[class="title-text qr-scan"]{
+    margin-top: 15px;
+}
+
+
+.tight-action-area{
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background-color:#fdc57b;
+
+    padding: 1em;
+}
+
+.explaination-text{
+    display: block;
+    margin-top: 7em;
+    color: black !important;
+}
+
+.footer {
+
+    position: static;
+    display: flex;
+    flex-direction: column;
+
+    margin-top: auto;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    background-color: #5a8b7e;
+    font-family: serif;
+    font-size: 75%;
+    padding: 5px;
+}
+
+.place-dashboard{
+    display: flex;
+    flex-direction: column;
+    margin: 7em;
+}
+
+.flex-tables-container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+#adding-hospital{
+    width: 30%;
+    height: fit-content;
+    margin-top: 10em;
+
+}
+
+#hospital-list{
+    margin: 0 20em;
+}
+
+.database-search-container, .table-view{
+    margin-top: 5em;
+}
+
+
+#place-table{
+    margin: 0 auto;
+}

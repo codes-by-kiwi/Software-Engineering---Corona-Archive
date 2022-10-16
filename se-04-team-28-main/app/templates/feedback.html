@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+	<title>Contact Form</title>
+</head>
+<body>
+	<div class="box">
+<!-- change the end of the next line by putting your email-->
+		<form action="https://formsubmit.co/putyouremailhere" method="POST">
+			<h3>Contact us so we can improve our services </h3>
+			<input type="hidden" name="_subject" value="New Feedback">
+			<input type="text" id="Username" name="username" placeholder="John Doe" required> 
+			<input type="email" id="Useremail" name="useremail" placeholder="johndoe@gmail.com" required>
+			<input type="text" id="Userphone" name="userphone" placeholder="01221812823" required>
+			<textarea id="yourcomments" rows="6" name="usercomments" placeholder="How can we be of assistance?"></textarea>
+			<button type="submit">Send</button>
+		</form>
+	</div>
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+	<script src="https://smptpjs.com/v3/smtp.js"></script>
+</body>
+</html>

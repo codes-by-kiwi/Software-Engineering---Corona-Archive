@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Hospital Dashboard</title>
+<style>
+    tr:hover {
+        background-color: #7e7268;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a>
+<a style="float:right" href="{{ url_for('hospital_routes.logout_hospital')}}"> Log out </a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="hospital-dashboard">
+    <h1 class="title-text"> Welcome, {{session['hospital']}}! </h1> <br>
+    <!-- Create a 2x1 grid -->
+    <div class="flex-tables-container">
+        <!-- Search form on the left -->
+        <div class="action-area">
+            <h2 class="action-title-text"> Search Visitors </h2> <br>
+
+            <h3 class="action-text"> Search by name: </h3>
+            <input type="text" class="form-control" name="name" />
+            <h3 class="action-text"> Search by email: </h3>
+            <input type="text" class="form-control" name="email" />
+            <h3 class="action-text"> Search by phone number: </h3>
+            <input type="tel" class="form-control" name="phone" />
+            
+            <div class="center">
+                <button class="action-btn" type="button" onclick="search()"> Search </button>
+            </div>
+        </div>
+        <!-- Database table on the right -->
+        <div class="action-area" id="infected-table" style="width: 675px; height: 500px; display: none">
+            <h3 class="action-title-text" style="margin-bottom: 5px">
+                Click on a visitor to change infection status
+            </h3>
+            <!-- Label that confirms when you change a visitor's infection status -->
+            <div class="center">
+                <label style="color: #4444ff; font-weight: bold;" id="confirm_label"></label>
+            </div>
+            <table id="visitors_table">
+                <thead>
+                    <tr>
+                        <th style="width: 27%">Name</th>
+                        <th style="width: 35%">Email</th>
+                        <th style="width: 25%">Phone number</th>
+                        <th style="width: 13%">Infected</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Send a /getusers request to data_routes to query all visitors with the search form
+    function search() {
+        let name = document.querySelector('input[name="name"]').value;
+        let email = document.querySelector('input[name="email"]').value;
+        let phone = document.querySelector('input[name="phone"]').value;
+        let displayTable = document.getElementById("infected-table")
+
+        $.post(
+            "/getusers", {
+                name: name,
+                email: email,
+                phone: phone,
+            },
+            (res) => {
+                update_table(JSON.parse(res));
+                displayTable.style.display = "block";
+            }
+        );
+    }
+
+    // Update table based on the search query
+    function update_table(visitors) {
+        let tbody = document.getElementById("tbody");
+        tbody.innerHTML = ``;
+
+        if (visitors != null) {
+            for (let i = 0; i < visitors.length; i++) {
+                tbody.innerHTML +=
+                `<tr id="tableElement" onclick='change_status(${JSON.stringify(visitors[i])})'>
+                <td>${visitors[i][0]}</td>
+                <td>${visitors[i][1] ? visitors[i][1] : "N/A"}</td>
+                <td>${visitors[i][2] ? visitors[i][2] : "N/A"}</td>
+                <td>${visitors[i][3] == 0 ? "No" : "Yes"}</td></tr>`;
+            }
+        }
+    }
+
+    // Change status of visitor
+    function change_status(visitor) {
+        var new_infected_status = visitor[3] == 0 ? "Infected" : "Not Infected";
+        // Send a confirm message with OK and Cancel
+        if (confirm("Change infection status of " + visitor[0] + " to " + new_infected_status + "?")) {
+            // Commit an UPDATE query into the database if confirmed
+            $.post(
+            "/updateinfection", {
+                device_id: visitor[4]
+            },
+            // Update table and confirmation label
+            (res) => {
+                if (res == "done") {
+                    search();
+                    document.getElementById("confirm_label").innerHTML =
+                    "Infection status of " + visitor[0] + " has been set to " + new_infected_status + "!";
+                }
+                console.log(res);
+            }
+            );
+        }
+    }
+</script>
+{% endblock content%}

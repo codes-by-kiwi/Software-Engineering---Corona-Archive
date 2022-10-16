@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<title>Checked In Page</title>
+<style>
+    #seconds, #minutes {
+        font-size: 5em;
+    }
+
+    .loginbtn {
+        background-color: #fdc57b;
+        color: rgb(114, 102, 102);
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+</style>
+{% endblock %}
+
+
+{% block navbar %}
+<a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a>
+{% endblock %}
+
+
+{% block content %}
+<div class="action-area" style="max-width: 390px">
+    <h2 class="action-title-text"> Checked in at: {{ placename }} </h2>
+    <h3 class="action-text"> Checked in since: <span id="signInTime"> {{sign_in_time}} </span> </h3>
+    <label id="minutes">00:00:00</label>
+    <br>
+    <hr>
+    <form>
+        <button class="loginbtn" onclick="signout()" type="button"> Sign out </button>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var qrcode = window.location.href.split("/").slice(-1)[0];
+
+    function signout() {
+        $.post(
+            "/signout", {
+                qrcode: qrcode,
+            },
+            (data, status) => {
+                if (data === "Saved") window.location.assign("/QR_code_scan");
+            }
+        );
+    }
+    var minutesLabel = document.getElementById("minutes");
+    var secondsLabel = document.getElementById("seconds");
+    var sign_in_time = new Date(document.getElementById("signInTime").innerHTML)
+    var totalSeconds = Math.abs(Date.now() - sign_in_time);
+    let time = '';
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function miliToHRS(milliseconds) {
+        let seconds = Math.floor(milliseconds / 1000);
+        let minutes = Math.floor(seconds / 60);
+        let hours = Math.floor(minutes / 60);
+
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+
+        return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+    }
+    setInterval(setTime, 1000);
+
+    function setTime() {
+        totalSeconds = Math.abs(Date.now() - sign_in_time);
+        time = miliToHRS(totalSeconds)
+        minutesLabel.innerHTML = time;
+    }
+</script>
+{% endblock%}

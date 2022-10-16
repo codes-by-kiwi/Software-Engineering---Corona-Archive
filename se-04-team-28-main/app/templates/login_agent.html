@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block head%}
+<title>Agent Login</title>
+{% endblock%}
+
+
+{% block navbar %}
+<!-- <a href="{{ url_for('home') }}"> Home </a>
+<a href="{{ url_for('about') }}"> About </a> -->
+{% endblock %}
+
+
+{% block content %}
+<form class="form-container" action="/login_agent" method="POST">
+    <h2 class="action-title-text"> AGENT LOGIN </h2> <br>
+
+    <input type="text" class="form-control" name="username" placeholder="Username" />
+    <input type="password" class="form-control" name="password" placeholder="Password" />
+    
+    <label class="error"> {{prompt}} </label>
+    <div class="center">
+        <button type="submit" class="action-btn"> SUBMIT </button>
+    </div>
+</form>
+{% endblock content%}
