@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!-- on this html the options for chosing user is shown such as visitor, hospital, agent, places e.t.c -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GTCoding</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/optionStyle.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Which user Type are you?</h2>
+
+      <div class="select-box">
+        <div class="options-container">
+          <div class="option">
+            <input
+              type="radio"
+              class="radio"
+              id="automobiles"
+              name="category"
+            />
+            <a href="{{ url_for('visitorRegister') }}">Visitor</a>
+          </div>
+
+          <div class="option">
+            <input type="radio" class="radio" id="film" name="category" />
+            <a href="{{ url_for('placeRegister') }}">Place Holder</a>
+          </div>
+
+          <div class="option">
+            <input type="radio" class="radio" id="science" name="category" />
+            <a href="{{ url_for('agentRegister') }}">Agent</a>
+          </div>
+
+          <div class="option">
+            <input type="radio" class="radio" id="art" name="category" />
+            <a href="{{ url_for('hospitalRegister') }}">Hospital</a>
+          </div>
+        </div>
+
+        <div class="selected">
+          Select user type
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='css/option.js') }}"></script>
+  </body>
+</html>
+
+{% endblock %}

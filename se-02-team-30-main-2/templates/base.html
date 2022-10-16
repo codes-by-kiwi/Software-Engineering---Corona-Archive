@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}-Base for pages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    {% block header %}
+
+    <section>
+        <header>
+            <!-- <a href="#" ><img src="../static/logo.png" class="logo"></a> -->
+            <ul>
+                <li><a href="{{ url_for('landing') }}">Home</a></li>
+                <li><a href="{{ url_for('registerOption') }}">Register </a></li>
+                <li><a href="{{ url_for('login') }}">Sign-in </a></li>
+                <li><a href="/moreinfo">Guide </a></li>
+                <!-- <li></li><a href="#" ><img src="../static/loupe.png" class="loupe"></a></li> -->
+            </ul>
+        </header>
+    </section>
+
+    {% endblock %}
+    
+</head>
+<body>
+    
+    {% block body %}
+
+
+    {% endblock %}
+</body>
+</html>

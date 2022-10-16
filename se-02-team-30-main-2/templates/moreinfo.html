@@ -1,0 +1,36 @@
+{%extends 'base.html' %}
+
+{% block body %}
+
+<div class="circle"></div>
+
+<div class= "content">
+    <div class="textBox">
+         <h2><span> Anti-Corona</span> Quick guide</h2>
+    <!-- <h2> A quick guide for how can you use the  <span> Anti-Corona service </span>.  </h2> -->
+    <p> Make an account and upload your latest Covid Vaccination Certificate, now entering a new place will be made easier than ever! 
+        Scan their QR code and easily show your documents, all in one place. If you came in contact with someone who later tested 
+        postive you will be notified! Your infection status will also automatically be changed by our medical authorities. 
+        </p>
+        
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <a href="{{ url_for('uploadImage') }}">Vaccination Certificate</a>
+    </div>
+
+    <div class="textBox">
+    <br><br><br>
+    <p> Are you a bussiness owner? Register now and we will generate a unique QR code for your bussiness. Download it or show it on our platform -
+        the check in for your clients will be fast and effective. We will keep track of their infection status and notfiy people in case of a positive
+        case. 
+        <br><br>
+        Dealing with Covid regulations has never been easier!</p> 
+        <a href="{{ url_for('QRcodegenerator') }}">QR-Generator</a>
+    </div>
+
+    <div class="imgBox">
+        <img src="../static/group1.webp" class="Corona">
+    </div>
+
+</div>
+
+{% endblock %} 
