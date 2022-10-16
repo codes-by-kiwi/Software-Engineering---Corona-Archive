@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+<link rel="stylesheet" href="upload.css">
+
+
+<div class="hero">
+	<div class="uploadform-box">
+<p> Submit your covid vaccination and covid test results here so we can update your records</p>
+<br>
+  Select image to upload: <br><br>
+  <input type="file" name="fileToUpload" id="fileToUpload" autocomplete="off" required>
+  <button type="submit"  onclick="f1()"> Submit </button>
+  <script>
+    function f1() {
+        alert("Uploaded Successfully");
+    }
+</script>
+</form>
+
+</body>
+</html>
