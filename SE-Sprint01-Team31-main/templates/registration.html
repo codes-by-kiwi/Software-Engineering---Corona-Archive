@@ -1,0 +1,77 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<!--information about the page itself/ metadata -->
+<title> Registration Page </title>
+<link rel="stylesheet" type="text/css" href="style/registration.css" />
+</head>
+<body>
+<h3>Corona Archive Registration Page</h3><br>
+<div class="container">
+<div class="row col-md-6 col-md-offset-3">
+<div class="panel panel-primary">
+<div class="panel-heading text-center">
+<h1>Registration Form </h1>
+</div>
+<div class="panel-body">
+<form action="registration2.php" method="POST">
+
+<label for="user_firstname"> First Name</label>
+<input type="text" class="form-control" name="user_firstname" id="user_firstname">
+<label for="user_lastname"> Last Name</label>
+<input type="text" class="form-control" name="user_lastname" id="user_lastname">
+<label for="user_emailadd"> Email Adress</label>
+<input type="text" class="form-control" name="user_emailadd" id="user_emailadd">
+<label for="user_address"> Home Address</label>
+<input type="text" class="form-control" name="user_address" id="user_address">
+<label for="user_phoneno"> Phone Number
+</label>
+<input type="text" class="form-control" name="user_phoneno" id="user_phoneno">
+<br> <br>
+<div>
+  <input type="radio" id="visitor" name="user" value="1"
+         checked>
+  <label for="visitor">Visitor</label>
+</div>
+<br>
+<div>
+  <input type="radio" id="place owner" name="user" value="0">
+  <label for="place owner">Place owner</label>
+</div>
+<br>
+<button type="submit" class="btn btn-default" id="popup" onclick="div_show()">Submit </button>
+<script>
+function div_show() {
+    alert("Registration Successful");
+}
+</script>
+<br>
+<br>
+<label for="Hospitals"> Hospitals registration: </label>
+<button type="submit" class="btn btn-default" onclick="f2()"> Request </button>
+<script>
+    function f2() {
+        alert("Request of Registration Successful");
+    }
+</script>
+<br> <br>
+<label for="Agent"> Agent registration: </label>
+<button type="submit" class="btn btn-default" onclick="f3()"> Request </button>
+<script>
+    function f3() {
+        alert("Request of Registration Successful");
+    }
+</script>
+</form>
+</div>
+<div class="panel-footer text-right">
+<br>
+&copy; Corona Archive
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
